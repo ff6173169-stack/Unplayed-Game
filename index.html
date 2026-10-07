@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gaming Achievement Map</title>
+<style>
+:root{--a:#00e5ff;--b:#3d5afe;--c:#9b5cff;--bg:#05060d;--card:rgba(255,255,255,.05);--bd:rgba(255,255,255,.1);--tx:#eef1ff;--mu:#9aa3c7;--font:"Noto Sans Bengali","Segoe UI",system-ui,Roboto,sans-serif}
+[data-theme=toxic]{--a:#39ff14;--b:#0b8a2e;--c:#b6ff3c;--bg:#020a04}
+[data-theme=crimson]{--a:#ff2d3d;--b:#ff8a00;--c:#ff4d6d;--bg:#0c0204}
+[data-theme=galaxy]{--a:#b86bff;--b:#4d7cff;--c:#ff5fc8;--bg:#070a22}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);line-height:1.55;overflow-x:hidden;transition:background .5s}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(circle at 20% 10%,color-mix(in srgb,var(--a) 22%,transparent),transparent 45%),radial-gradient(circle at 85% 30%,color-mix(in srgb,var(--c) 20%,transparent),transparent 45%);animation:drift 14s ease-in-out infinite alternate}
+body:after{content:"";position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:36px 36px;animation:grid 20s linear infinite}
+@keyframes drift{to{transform:scale(1.15) translateY(-20px)}}
+@keyframes grid{to{background-position:36px 36px}}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes pulse{50%{opacity:.55;transform:scale(1.25)}}
+@keyframes glow{50%{text-shadow:0 0 10px var(--a),0 0 30px var(--c),0 0 60px var(--b)}}
+section,header{max-width:1100px;margin:0 auto;padding:28px 16px;animation:up .6s both}
+.hero{text-align:center;padding-top:54px}
+.badge{display:inline-block;padding:7px 16px;border:1px solid var(--a);border-radius:99px;color:var(--a);font-size:.82rem;letter-spacing:.06em;background:var(--card);box-shadow:0 0 18px color-mix(in srgb,var(--a) 35%,transparent)}
+h1{font-size:clamp(1.9rem,8vw,3.6rem);line-height:1.25;margin:18px 0 10px;background:linear-gradient(90deg,var(--a),var(--c),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mu);max-width:640px;margin:0 auto 18px;font-size:1.02rem}
+.big{font-size:3.2rem;font-weight:800;color:var(--a);text-shadow:0 0 24px var(--a)}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:13px 20px;border-radius:14px;min-height:48px;font-weight:600;transition:.2s}
+.btn:hover{transform:translateY(-2px);border-color:var(--a)}
+.btn.pri{background:linear-gradient(135deg,var(--b),var(--c));border:0;box-shadow:0 8px 26px color-mix(in srgb,var(--b) 50%,transparent)}
+h2{font-size:1.45rem;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.bar{display:grid;gap:10px;grid-template-columns:1fr;margin-bottom:12px}
+@media(min-width:700px){.bar{grid-template-columns:1fr 200px}}
+input[type=text],select{font:inherit;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid var(--bd);background:rgba(0,0,0,.4);color:var(--tx);outline:0}
+input:focus,select:focus{border-color:var(--a);box-shadow:0 0 14px color-mix(in srgb,var(--a) 40%,transparent)}
+select option{background:#111}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:thin}
+.chip{flex:none;font:inherit;font-size:.86rem;cursor:pointer;padding:9px 14px;border-radius:99px;border:1px solid var(--bd);background:var(--card);color:var(--tx);min-height:40px}
+.chip.on{border-color:var(--a);color:var(--a);box-shadow:0 0 16px color-mix(in srgb,var(--a) 55%,transparent);background:color-mix(in srgb,var(--a) 12%,transparent)}
+.live{font-weight:700;color:var(--a);margin:6px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;max-height:560px;overflow-y:auto;padding:4px;scrollbar-width:thin}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
+.g{position:relative;text-align:left;font:inherit;cursor:pointer;padding:11px 12px;border-radius:14px;border:1px solid var(--bd);background:rgba(255,255,255,.04);color:var(--tx);min-width:0;transition:.2s}
+.g b{display:block;font-size:.9rem;line-height:1.25;overflow-wrap:anywhere;padding-right:18px}
+.g small{color:var(--mu);font-size:.74rem}
+.g:hover{transform:translateY(-2px)}
+.g.on{border-color:var(--a);background:color-mix(in srgb,var(--a) 15%,transparent);box-shadow:0 0 18px color-mix(in srgb,var(--a) 50%,transparent);transform:scale(1.03)}
+.g.on:after{content:"✓";position:absolute;top:7px;right:9px;color:var(--a);font-weight:800}
+.gh{grid-column:1/-1;font-size:1rem;margin:10px 0 2px;color:var(--a)}
+.empty{grid-column:1/-1;text-align:center;color:var(--mu);padding:30px}
+.sel{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.sc{font:inherit;font-size:.82rem;padding:7px 12px;border-radius:99px;border:1px solid var(--a);background:color-mix(in srgb,var(--a) 10%,transparent);color:var(--tx);cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:800px){.stats{grid-template-columns:repeat(3,1fr)}}
+.st{padding:14px;border-radius:16px;background:rgba(0,0,0,.3);border:1px solid var(--bd);min-width:0}
+.st span{font-size:.78rem;color:var(--mu);display:block}.st b{font-size:1.15rem;color:var(--a);overflow-wrap:anywhere}
+.two{display:grid;gap:14px}@media(min-width:800px){.two{grid-template-columns:1fr 1fr}}
+.themes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
+.th{cursor:pointer;font:inherit;color:var(--tx);border:2px solid var(--bd);border-radius:16px;padding:10px;background:rgba(0,0,0,.35);text-align:center}
+.th.on{border-color:var(--a);box-shadow:0 0 18px color-mix(in srgb,var(--a) 50%,transparent)}
+.pv{height:46px;border-radius:10px;margin-bottom:8px}.dots i{display:inline-block;width:12px;height:12px;border-radius:50%;margin:0 2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.row .btn{flex:1 1 150px}
+.prof{display:flex;gap:14px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.av{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--c)) center/cover;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;border:3px solid var(--a);flex:none;color:#fff}
+/* poster */
+.pw{max-width:560px;margin:0 auto}
+#poster{position:relative;padding:22px 18px;border-radius:26px;background:linear-gradient(160deg,var(--bg) 0%,#0b0f24 60%,var(--bg) 100%);border:3px solid var(--a);box-shadow:0 0 40px color-mix(in srgb,var(--a) 45%,transparent);overflow:hidden;color:var(--tx)}
+#poster:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 0,color-mix(in srgb,var(--c) 30%,transparent),transparent 50%),radial-gradient(circle at 0 100%,color-mix(in srgb,var(--a) 25%,transparent),transparent 50%)}
+#poster>*{position:relative}
+.pt{text-align:center;letter-spacing:.25em;font-weight:800;color:var(--a);font-size:.95rem}
+.ph{display:flex;flex-direction:column;align-items:center;gap:4px;margin:12px 0}
+.ph .av{width:104px;height:104px;font-size:2.3rem;box-shadow:0 0 24px var(--a)}
+.pn{font-size:1.5rem;font-weight:800}.pr{color:var(--c);font-weight:700}.pp{color:var(--mu);font-size:.9rem}
+.pm{text-align:center;margin:10px 0;font-size:2.2rem;font-weight:900;color:var(--a);text-shadow:0 0 18px var(--a)}.pm small{font-size:1rem;letter-spacing:.2em;display:block;color:var(--tx);text-shadow:none}
+.p3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.p3 div{background:rgba(255,255,255,.07);border-radius:12px;padding:8px 4px;text-align:center;font-size:.72rem;color:var(--mu)}.p3 b{display:block;color:var(--tx);font-size:.9rem}
+.pl{font-size:.7rem;letter-spacing:.2em;color:var(--a);font-weight:800;margin:14px 0 6px}
+.net{background:rgba(0,0,0,.35);border-radius:14px;padding:4px}.net svg{width:100%;height:auto;display:block}
+.bd{display:flex;flex-wrap:wrap;gap:6px}.bd span{font-size:.75rem;padding:5px 10px;border-radius:99px;background:color-mix(in srgb,var(--c) 22%,transparent);border:1px solid var(--c)}
+.dist div{display:flex;align-items:center;gap:8px;font-size:.74rem;margin:3px 0}.dist em{width:96px;font-style:normal;color:var(--mu);flex:none}.dist i{display:block;height:8px;border-radius:5px;background:linear-gradient(90deg,var(--a),var(--c))}
+.pg{display:flex;flex-wrap:wrap;gap:4px}.pg span{font-size:.64rem;padding:3px 7px;border-radius:7px;background:rgba(255,255,255,.08)}
+.rv{font-size:.84rem;color:#dfe4ff;line-height:1.6}.pf{text-align:center;margin-top:14px;font-size:.7rem;letter-spacing:.2em;color:var(--a)}
+.note{text-align:center;color:var(--mu);font-size:.85rem}
+footer{margin-top:30px;padding:46px 16px 56px;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.7));border-top:1px solid var(--bd)}
+.cr{font-size:clamp(1.5rem,7vw,2.8rem);font-weight:900;color:var(--a);text-shadow:0 0 12px var(--a),0 0 30px var(--c);animation:glow 3s ease-in-out infinite;overflow-wrap:anywhere}
+footer p{color:var(--mu);margin-top:6px}footer .m{color:var(--tx);font-weight:700;margin-top:14px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:#10142b;border:1px solid var(--a);padding:12px 20px;border-radius:99px;z-index:99;transition:.35s;box-shadow:0 0 20px color-mix(in srgb,var(--a) 50%,transparent);max-width:90vw;text-align:center}
+#toast.s{transform:translate(-50%,0)}
+.node{animation:pulse 3s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+<span class="badge">2015 — 2026 Gaming Journey</span>
+<h1>আপনি কত ধরনের গেম খেলেছেন?</h1>
+<p class="sub">আপনার Gaming Journey তৈরি করুন — আপনার খেলা গেমগুলো বেছে নিন এবং নিজের Gaming Achievement Map বানান।</p>
+<div class="big" id="heroN">0টি গেম</div>
+<p class="sub">আপনার gaming history-কে একটি unique visual profile-এ পরিণত করুন।</p>
+<button class="btn pri" id="go">গেম বাছাই করুন ↓</button>
+</header>
+
+<section id="pick">
+<h2>আপনি কোন কোন গেম খেলেছেন?</h2>
+<div class="card">
+<div class="bar"><input type="text" id="q" placeholder="গেম খুঁজুন..." autocomplete="off"><select id="yr"></select></div>
+<div class="chips" id="cats"></div>
+<div class="live" id="cnt">আপনি 0টি গেম খেলেছেন</div>
+<div class="grid" id="grid"></div>
+</div>
+</section>
+
+<section>
+<h2>আপনার নির্বাচিত গেম</h2>
+<div class="card"><div class="sel" id="sel"></div><button class="btn" id="clr">সব নির্বাচন বাতিল করুন</button></div>
+</section>
+
+<section>
+<h2>📈 Gaming Statistics</h2>
+<div class="stats" id="stats"></div>
+<div class="two" style="margin-top:14px">
+<div class="card"><h2>🕰️ আপনার Gaming Era</h2><div class="big" style="font-size:1.6rem" id="era">—</div><p id="span" class="note" style="text-align:left"></p></div>
+<div class="card"><h2>🧠 Gamer Personality</h2><div class="big" style="font-size:1.6rem" id="pers">—</div><p id="persd" class="note" style="text-align:left"></p></div>
+</div>
+</section>
+
+<section>
+<h2>আপনার Gaming Profile</h2>
+<div class="two">
+<div class="card"><input type="text" id="nm" placeholder="আপনার নাম লিখুন" maxlength="28"><div class="prof"><div class="av" id="pav">🎮</div><label class="btn" style="cursor:pointer">📷 ছবি যোগ করুন<input type="file" id="ph" accept="image/jpeg,image/png,image/webp" hidden></label></div></div>
+<div class="card"><b>আপনার Gaming Map-এর Theme বেছে নিন</b><div class="themes" id="themes"></div></div>
+</div>
+</section>
+
+<section>
+<h2>🎮 আপনার Gaming Achievement Map</h2>
+<div class="pw"><div id="poster"></div>
+<div class="row"><button class="btn pri" id="png">↓ PNG</button><button class="btn pri" id="jpg">↓ JPG</button></div>
+<div class="row"><button class="btn" id="shr">🔗 Share</button><button class="btn" id="cpy">📋 ফলাফল কপি করুন</button><button class="btn" id="rst">সব Reset করুন</button></div>
+<p class="note" style="margin-top:14px">🔐 আপনার ছবি ও তথ্য এই website থেকে কোথাও upload করা হয় না।</p></div>
+</section>
+
+<footer>
+<div class="cr">Created by XZ Naim⁶⁹</div>
+<p class="m">Gaming Achievement Map</p>
+<p>Turn your gaming history into your own story.</p>
+<p style="font-size:.8rem">© 2026 Gaming Achievement Map</p>
+</footer>
+<div id="toast"></div>
+
+<script>
+const CATS=[["fps","🔫","FPS / Shooter","#ff4d6d"],["br","🪂","Battle Royale","#ff9f1c"],["act","⚔️","Action / Adventure","#ffd166"],["ow","🌍","Open World","#06d6a0"],["rpg","🧙","RPG","#9b5cff"],["hor","🧟","Horror","#c1121f"],["sbx","🏗️","Sandbox / Survival","#8ac926"],["rac","🏎️","Racing / Driving","#00b4d8"],["spo","⚽","Sports","#4cc9f0"],["fgt","🥊","Fighting","#f72585"],["str","🧠","Strategy","#4895ef"],["sim","🏙️","Simulation","#2ec4b6"],["par","🎉","Multiplayer / Party","#ff70a6"],["mob","📱","Mobile","#ffbe0b"],["ind","🌱","Indie / Casual","#b8f2a1"],["mmo","🌐","MMO / Online","#7b8cff"]];
+const RAW={
+fps:"Call of Duty: Black Ops III|2015;Call of Duty: Modern Warfare|2019|PCC;Call of Duty: Modern Warfare II|2022;Call of Duty: Black Ops 6|2024;Counter-Strike 2|2023|P|l;CS:GO|2012|P|l;Valorant|2020|P|l;Overwatch|2016|PC;Overwatch 2|2022;Rainbow Six Siege|2015|PC|l;Battlefield 1|2016;Battlefield V|2018;Battlefield 2042|2021;Titanfall 2|2016;Doom|2016;Doom Eternal|2020;Left 4 Dead 2|2009|P|l;Payday 2|2013;Payday 3|2023;Borderlands 3|2019;Helldivers 2|2024|PC|l;The Finals|2023;Marvel Rivals|2024;Halo Infinite|2021;Destiny 2|2017;Team Fortress 2|2007|P;Escape from Tarkov|2017|P;Insurgency: Sandstorm|2018;Ready or Not|2023|P;Splitgate|2019;XDefiant|2024;Quake Champions|2018|P;Metro Exodus|2019",
+br:"Fortnite|2017|PCM|l;PUBG|2017|PC|l;PUBG Mobile|2018|M|l;Free Fire|2017|M|l;Free Fire MAX|2021|M|l;Call of Duty: Warzone|2020|PC|l;Apex Legends|2019|PC|l;Blood Strike|2023|M;Naraka: Bladepoint|2021|P;Super Animal Royale|2018|P;Spellbreak|2020;Rules of Survival|2017|M;Ring of Elysium|2018|P;Farlight 84|2022|M;Knives Out|2017|M",
+act:"God of War|2018|PC|l;God of War Ragnarök|2022|PC|l;Ghost of Tsushima|2020|PC;Marvel's Spider-Man|2018;Marvel's Spider-Man 2|2023|C;Death Stranding|2019;Sekiro|2019;Dark Souls III|2016;Lies of P|2023;Black Myth: Wukong|2024|PC|l;NieR: Automata|2017;Devil May Cry 5|2019;Control|2019;Alan Wake 2|2023;Deathloop|2021;Dishonored 2|2016;Hitman|2016;Hitman 2|2018;Hitman 3|2021;Assassin's Creed Origins|2017;Assassin's Creed Odyssey|2018;Assassin's Creed Valhalla|2020;Assassin's Creed Mirage|2023;Uncharted 4|2016|C;The Last of Us Part I|2022;The Last of Us Part II|2020|C;Batman: Arkham Knight|2015;Metal Gear Solid V|2015;Sifu|2022;Star Wars Jedi: Fallen Order|2019;Star Wars Jedi: Survivor|2023;Shadow of the Tomb Raider|2018;The Legend of Zelda: Breath of the Wild|2017|C|l;The Legend of Zelda: Tears of the Kingdom|2023|C|l;Super Mario Odyssey|2017|C|l;Ratchet & Clank: Rift Apart|2021|C;Prince of Persia: The Lost Crown|2024",
+ow:"GTA V|2013|PC|l;GTA Online|2013|PC|l;GTA VI|2026|C|l;Red Dead Redemption 2|2018|PC|l;Hogwarts Legacy|2023|PC|l;Far Cry 5|2018;Far Cry 6|2021;Watch Dogs 2|2016;Watch Dogs: Legion|2020;Horizon Zero Dawn|2017;Horizon Forbidden West|2022;Starfield|2023;Fallout 4|2015;Fallout 76|2018;Saints Row|2022;Just Cause 4|2018;Mafia: Definitive Edition|2020;Ghost Recon Wildlands|2017;Days Gone|2019;Sea of Thieves|2018;The Crew 2|2018;Mad Max|2015;Middle-earth: Shadow of War|2017;Avatar: Frontiers of Pandora|2023;Assassin's Creed Shadows|2025;Spider-Man: Miles Morales|2020|C",
+rpg:"The Witcher 3|2015|PC|l;Cyberpunk 2077|2020|PC|l;Elden Ring|2022|PC|l;Baldur's Gate 3|2023|PC|l;Genshin Impact|2020|PCM|l;Honkai: Star Rail|2023|PCM|l;Zenless Zone Zero|2024|PCM;Wuthering Waves|2024|PCM;Persona 5|2016|C;Persona 5 Royal|2019;Persona 3 Reload|2024;Final Fantasy VII Remake|2020;Final Fantasy VII Rebirth|2024;Final Fantasy XVI|2023;Pokémon Scarlet|2022|C|l;Pokémon Violet|2022|C|l;Pokémon Legends: Arceus|2022|C;Diablo IV|2023;Path of Exile|2013|P;Path of Exile 2|2024|P;Monster Hunter World|2018;Monster Hunter Rise|2021;Monster Hunter Wilds|2025;Divinity: Original Sin 2|2017;Disco Elysium|2019;Dragon Age: The Veilguard|2024;Mass Effect Legendary Edition|2021;Dragon's Dogma 2|2024;Octopath Traveler|2018;Xenoblade Chronicles 3|2022|C;Fire Emblem: Three Houses|2019|C;Kingdom Come: Deliverance|2018;The Elder Scrolls V: Skyrim|2011|PC|l;Yakuza: Like a Dragon|2020;Like a Dragon: Infinite Wealth|2024;Clair Obscur: Expedition 33|2025",
+hor:"Resident Evil 7|2017;Resident Evil Village|2021;Resident Evil 2|2019;Resident Evil 3|2020;Resident Evil 4 Remake|2023|PC|l;Five Nights at Freddy's|2014|PM|l;Five Nights at Freddy's: Security Breach|2021;Phasmophobia|2020|P|l;Dead by Daylight|2016|PCM|l;Outlast|2013;Outlast 2|2017;Alien: Isolation|2014;Amnesia: Rebirth|2020;Dying Light|2015;Dying Light 2|2021;The Evil Within 2|2017;Silent Hill 2|2024;Dead Space|2023;Little Nightmares|2017;Little Nightmares II|2021;Layers of Fear|2016;Visage|2020|P;The Medium|2021;Until Dawn|2015|C;The Quarry|2022;Lethal Company|2023|P|l;Content Warning|2024|P;Poppy Playtime|2021|PM;Granny|2017|M;Bendy and the Ink Machine|2017;Escape the Backrooms|2022|P;Dead Island 2|2023",
+sbx:"Minecraft|2011|PCM|l;Roblox|2006|PCM|l;Terraria|2011|PCM|l;ARK: Survival Evolved|2017;Rust|2018;Raft|2018|P|l;Valheim|2021|P;Palworld|2024|PC|l;The Forest|2018|P;Sons of the Forest|2024|P;Subnautica|2018;Don't Starve|2013;Don't Starve Together|2016;7 Days to Die|2013;DayZ|2018;Grounded|2022;No Man's Sky|2016;Satisfactory|2019|P;Factorio|2016|P;Project Zomboid|2013|P;The Long Dark|2017;Green Hell|2019;Core Keeper|2022;Enshrouded|2024|P;RimWorld|2018|P;Space Engineers|2019|P;Garry's Mod|2006|P|l;Teardown|2022|P;Astroneer|2019;Deep Rock Galactic|2020;Conan Exiles|2018;Stranded Deep|2015;Minecraft Dungeons|2020;Minecraft Legends|2023",
+rac:"Forza Horizon 3|2016;Forza Horizon 4|2018|PC|l;Forza Horizon 5|2021|PC|l;Forza Motorsport|2023;Need for Speed Heat|2019;Need for Speed Payback|2017;Need for Speed Unbound|2022;Assetto Corsa|2014|P|l;Assetto Corsa Competizione|2019;Gran Turismo 7|2022|C;Gran Turismo Sport|2017|C;F1 22|2022;F1 23|2023;F1 24|2024;Mario Kart 8 Deluxe|2017|C|l;Trackmania|2020|P;DiRT Rally 2.0|2019;EA Sports WRC|2023;Project CARS 2|2017;The Crew Motorfest|2023;Wreckfest|2018;CarX Street|2023|M;Asphalt 9: Legends|2018|PCM;Real Racing 3|2013|M",
+spo:"FIFA 17|2016;FIFA 19|2018;FIFA 22|2021|PC|l;FIFA 23|2022|PC|l;EA Sports FC 24|2023|PC|l;EA Sports FC 25|2024;eFootball|2021|PCM|l;eFootball PES 2020|2019;NBA 2K17|2016;NBA 2K20|2019;NBA 2K23|2022;NBA 2K25|2024;Madden NFL 24|2023;WWE 2K22|2022;WWE 2K24|2024;UFC 4|2020;Rocket League|2015|PC|l;Football Manager 2024|2023;Tony Hawk's Pro Skater 1+2|2020;Dream League Soccer 2024|2023|M;Cricket 24|2024;Mario Tennis Aces|2018|C",
+fgt:"Tekken 7|2017|PC|l;Tekken 8|2024;Street Fighter V|2016;Street Fighter 6|2023;Mortal Kombat X|2015;Mortal Kombat 11|2019;Mortal Kombat 1|2023;Dragon Ball FighterZ|2018;Dragon Ball: Sparking! Zero|2024;Brawlhalla|2017|PCM;Super Smash Bros. Ultimate|2018|C|l;Guilty Gear -Strive-|2021;Injustice 2|2017;SoulCalibur VI|2018;MultiVersus|2022;Naruto Shippuden: Ultimate Ninja Storm 4|2016;Shadow Fight 3|2017|M;Fatal Fury: City of the Wolves|2025",
+str:"Civilization VI|2016;Age of Empires IV|2021|P;Age of Empires II: Definitive Edition|2019;Total War: Warhammer II|2017|P;Total War: Warhammer III|2022|P;Total War: Three Kingdoms|2019|P;XCOM 2|2016;Stellaris|2016|P;Crusader Kings III|2020;Hearts of Iron IV|2016|P;Teamfight Tactics|2019|PM|l;Into the Breach|2018;Northgard|2018;Frostpunk|2018;Anno 1800|2019|P;Company of Heroes 3|2023|P;Hearthstone|2014|PM|l;Marvel Snap|2022|PM;Legends of Runeterra|2020|PM;StarCraft II|2010|P;Yu-Gi-Oh! Master Duel|2022|PCM;Total War: Warhammer|2016|P",
+sim:"The Sims 4|2014|PC|l;Cities: Skylines|2015;Cities: Skylines II|2023;Euro Truck Simulator 2|2012|P|l;American Truck Simulator|2016|P;Microsoft Flight Simulator|2020|PC|l;BeamNG.drive|2015|P|l;Planet Zoo|2019|P;Planet Coaster|2016|P;Two Point Hospital|2018;Farming Simulator 19|2018;Farming Simulator 22|2021;House Flipper|2018;PowerWash Simulator|2022;Goat Simulator 3|2022;Bus Simulator 21|2021;Car Mechanic Simulator 2021|2021;Animal Crossing: New Horizons|2020|C|l;Kerbal Space Program|2015;Hay Day|2012|M;Truck Simulator Ultimate|2021|M;My Summer Car|2016|P;Supermarket Simulator|2024|P;Gas Station Simulator|2021",
+par:"Among Us|2018|PCM|l;Fall Guys|2020|PC|l;Gang Beasts|2017;Human: Fall Flat|2016|PCM;It Takes Two|2021|PC|l;A Way Out|2018;Overcooked! 2|2018;The Jackbox Party Pack 3|2016;Mario Party Superstars|2021|C;Super Mario Party|2018|C;Splatoon 2|2017|C|l;Splatoon 3|2022|C|l;Pummel Party|2018|P;Golf With Your Friends|2020;Pico Park|2021;Stumble Guys|2021|PM|l;Chained Together|2024|P;Ultimate Chicken Horse|2016;Moving Out|2020;Heave Ho|2018;Unrailed!|2019;Gartic Phone|2020|P;Tabletop Simulator|2015|P;Ludo King|2016|M|l;UNO!|2016|PCM",
+mob:"Mobile Legends: Bang Bang|2016|M|l;Call of Duty: Mobile|2019|M|l;Clash of Clans|2012|M|l;Clash Royale|2016|M|l;Brawl Stars|2018|M|l;Subway Surfers|2012|M|l;Candy Crush Saga|2012|M|l;Temple Run 2|2013|M;Pokémon GO|2016|M|l;Honor of Kings|2015|M|l;Arena of Valor|2016|M;League of Legends: Wild Rift|2020|M;Pokémon UNITE|2021|MC;8 Ball Pool|2010|M|l;Hill Climb Racing 2|2016|M;Coin Master|2015|M;Carrom Pool|2017|M;Rise of Kingdoms|2018|PM;Lords Mobile|2016|M;State of Survival|2019|M;Township|2013|M;Mini Militia|2015|M|l;Zooba|2019|M;Critical Ops|2015|M;Standoff 2|2017|M;Sky: Children of the Light|2019|PCM;Monument Valley 2|2017|M;Cookie Run: Kingdom|2021|M;AFK Arena|2019|M;RAID: Shadow Legends|2018|PM;Fate/Grand Order|2015|M;Arknights|2019|M;Diablo Immortal|2022|PM;Mario Kart Tour|2019|M;PUBG: New State|2021|M;Plants vs. Zombies 2|2013|M",
+ind:"Stardew Valley|2016|PCM|l;Hollow Knight|2017|PC|l;Hollow Knight: Silksong|2025;Cuphead|2017;Celeste|2018;Hades|2020|PC|l;Hades II|2024|P;Undertale|2015|PC|l;Vampire Survivors|2022|PM|l;Balatro|2024|PCM|l;Geometry Dash|2013|PM|l;Stray|2022;Dead Cells|2018;Slay the Spire|2019;Ori and the Blind Forest|2015;Ori and the Will of the Wisps|2020;Inside|2016;Return of the Obra Dinn|2018;Katana ZERO|2019;Risk of Rain 2|2020;The Binding of Isaac: Rebirth|2014;Enter the Gungeon|2016;Blasphemous|2019;Dave the Diver|2023;Cult of the Lamb|2022;Untitled Goose Game|2019;A Short Hike|2019;Spiritfarer|2020;Outer Wilds|2019;Firewatch|2016;What Remains of Edith Finch|2017;Getting Over It with Bennett Foddy|2017|PM;Slime Rancher|2017;Unpacking|2021;Pizza Tower|2023|P;Neon White|2022;Tetris Effect|2018;Baba Is You|2019;Shovel Knight|2014;Deltarune|2018|PC;Brotato|2022|PM",
+mmo:"World of Warcraft|2004|P|l;Final Fantasy XIV|2013|PC|l;Guild Wars 2|2012|P;The Elder Scrolls Online|2014;New World|2021|P;Lost Ark|2022|P;Black Desert Online|2015;League of Legends|2009|P|l;Dota 2|2013|P|l;Warframe|2013;War Thunder|2013;World of Tanks|2010|PCM|l;World of Warships|2015|P;Albion Online|2017|PM;Old School RuneScape|2013|PM;Throne and Liberty|2024;Tower of Fantasy|2022|PM;Star Wars: The Old Republic|2011|P;MapleStory|2003|PM;SMITE|2014;Paladins|2018;Heroes of the Storm|2015|P;Honkai Impact 3rd|2016|M;Dauntless|2019"};
+const CN=Object.fromEntries(CATS.map(c=>[c[0],c]));
+const PL={P:"PC",C:"Console",M:"Mobile"};
+const GAMES=[],seen=new Set();
+for(const k in RAW)RAW[k].split(";").forEach(s=>{const[p,y,pl,po]=s.split("|");const id=p.toLowerCase().replace(/[^a-z0-9]+/g,"-");if(seen.has(id))return;seen.add(id);
+const pp=pl||(k==="mob"?"M":"PC");GAMES.push({id,name:p,year:+y,category:k,platform:pp==="PC"?["PC","Console"]:[...pp].map(c=>PL[c]),popularity:po==="l"?"legendary":"high"})});
+const GM=Object.fromEntries(GAMES.map(g=>[g.id,g]));
+const THEMES=[["cyber","Cyber Neon",["#00e5ff","#3d5afe","#9b5cff"]],["toxic","Toxic Green","#39ff14,#0b8a2e,#b6ff3c".split(",")],["crimson","Crimson Fury","#ff2d3d,#ff8a00,#ff4d6d".split(",")],["galaxy","Galaxy Dream","#b86bff,#ff5fc8,#4d7cff".split(",")]];
+const DEF={selectedGames:[],selectedTheme:"cyber",userName:"",profileImage:null,search:"",selectedYear:"all",selectedCategory:"all"};
+const state=JSON.parse(JSON.stringify(DEF));
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let tt;function showToast(m){const t=$("toast");t.textContent=m;t.classList.add("s");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("s"),2000)}
+function save(){try{localStorage.setItem("gjm",JSON.stringify({g:state.selectedGames,n:state.userName,t:state.selectedTheme}))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem("gjm")||"null");if(d){state.selectedGames=(d.g||[]).filter(i=>GM[i]);state.userName=d.n||"";if(THEMES.some(t=>t[0]===d.t))state.selectedTheme=d.t}}catch(e){}}
+const sel=()=>state.selectedGames.map(i=>GM[i]);
+function renderCategories(){$("cats").innerHTML=[["all","","All"],...CATS].map(c=>`<button class="chip${state.selectedCategory===c[0]?" on":""}" data-c="${c[0]}">${c[1]} ${c[2]}</button>`).join("")}
+function filterGames(){const q=state.search.trim().toLowerCase();return GAMES.filter(g=>(state.selectedCategory==="all"||g.category===state.selectedCategory)&&(state.selectedYear==="all"||g.year===+state.selectedYear)&&(!q||g.name.toLowerCase().includes(q)||CN[g.category][2].toLowerCase().includes(q)||String(g.year).includes(q)))}
+function renderGames(){const l=filterGames(),cd=g=>`<button class="g${state.selectedGames.includes(g.id)?" on":""}" data-id="${g.id}"><b>${esc(g.name)}</b><small>${g.year}<br>${CN[g.category][2]}</small></button>`;let h="";if(!l.length)h=`<div class="empty">কোনো গেম পাওয়া যায়নি</div>`;else if(state.selectedCategory==="all"){CATS.forEach(c=>{const m=l.filter(g=>g.category===c[0]);if(m.length)h+=`<h3 class="gh">${c[1]} ${c[2]}</h3>`+m.map(cd).join("")})}else h=l.map(cd).join("");$("grid").innerHTML=h}
+function selectGame(id){if(!state.selectedGames.includes(id)){state.selectedGames.push(id);showToast("🎮 Game added!")}}
+function deselectGame(id){state.selectedGames=state.selectedGames.filter(i=>i!==id);showToast("Game removed!")}
+let shown=0;function updateCounter(){const n=state.selectedGames.length;$("cnt").textContent=`আপনি ${n}টি গেম খেলেছেন`;const el=$("heroN"),from=shown;shown=n;const t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/400);el.textContent=Math.round(from+(n-from)*p)+"টি গেম";if(p<1)requestAnimationFrame(f)})(t0)}
+function renderSelectedGames(){$("sel").innerHTML=sel().map(g=>`<button class="sc" data-rm="${g.id}">${esc(g.name)} ×</button>`).join("")||`<span class="note">এখনো কোনো গেম নির্বাচন করা হয়নি</span>`}
+function calc(){const G=sel(),n=G.length,c={};CATS.forEach(x=>c[x[0]]=0);G.forEach(g=>c[g.category]++);const ys=G.map(g=>g.year),mn=Math.min(...ys),mx=Math.max(...ys);const old=n?G.reduce((a,b)=>b.year<a.year?b:a):null,nw=n?G.reduce((a,b)=>b.year>=a.year?b:a):null;return{G,n,c,genres:Object.values(c).filter(v=>v).length,span:n?mx-mn:0,mn,mx,old,nw}}
+function calculateGamerRank(n){return n<1?"Gaming Journey শুরু করুন":n<=5?"Rookie Gamer":n<=15?"Rising Gamer":n<=30?"Pro Gamer":n<=50?"Elite Gamer":n<=80?"Gaming Veteran":n<=120?"Gaming Legend":"Ultimate Gaming Archivist"}
+function updateGamingEra(s){if(!s.n)return{label:"—",txt:"গেম বাছাই করলে আপনার era দেখা যাবে।"};const b=[0,0,0,0];s.G.forEach(g=>b[g.year<=2017?0:g.year<=2020?1:g.year<=2023?2:3]++);const m=Math.max(...b),i=b.indexOf(m);const L=["🎮 Classic Era Gamer","🔥 Golden Era Gamer","⚡ Modern Era Gamer","🚀 Next-Gen Era Gamer"];const multi=m/s.n<.5&&s.span>=6;return{label:multi?"🌌 Multi-Era Gamer":L[i],txt:`Your gaming journey spans ${s.span} years (${s.mn}–${s.mx}).`}}
+function calculatePersonality(s){const{n,c}=s;if(!n)return{name:"—",d:"গেম বাছাই করলে personality দেখা যাবে।"};const sh=a=>a.reduce((x,k)=>x+c[k],0)/n;
+if(n>=60&&s.genres>=12)return{name:"Ultimate Variety Gamer",d:"প্রায় সব genre-ই আপনার চেনা।"};
+if(s.span>=10&&n>=12&&sh(["fps","act","rpg","ow"])<.7&&s.mn<=2016)return{name:"Gaming Historian",d:"আপনি অনেক যুগের গেমিং দেখেছেন।"};
+const T=[["Competitive Beast",sh(["fps","br","fgt","str"]),"Competition আর skill আপনার প্রিয়।"],["Story Explorer",sh(["rpg","act"]),"গল্প আর চরিত্র আপনাকে টানে।"],["Open World Adventurer",sh(["ow"])*1.4,"অজানা জগৎ explore করাই আপনার নেশা।"],["Multiplayer Specialist",sh(["par","mmo","mob"]),"বন্ধুদের সাথে খেলাতেই আনন্দ।"],["Nightmare Hunter",sh(["hor"])*1.6,"ভয়কে আপনি challenge হিসেবে নেন।"],["Speed Demon",sh(["rac","spo"])*1.2,"গতি আর প্রতিযোগিতা আপনার রক্তে।"],["Creative Builder",sh(["sbx","sim"]),"নিজের হাতে জগৎ গড়তে ভালোবাসেন।"]];
+T.sort((a,b)=>b[1]-a[1]);if(T[0][1]<.3&&s.genres>=6)return{name:"Genre Explorer",d:"কোনো একটি genre-এ আটকে থাকেন না।"};return{name:T[0][0],d:T[0][2]}}
+function generateBadges(s){const b=[],{n,c}=s;if(n>=10)b.push("🎯 10+ Games");if(n>=25)b.push("🔥 25+ Games");if(n>=50)b.push("🏅 Half-Century Gamer");if(n>=100)b.push("💯 100 Club");if(s.span>=10)b.push("⏳ Time Traveler");if(s.genres>=5)b.push("🧭 Genre Explorer");if(c.hor>=3)b.push("👻 Horror Hunter");if(c.rac>=5)b.push("🏁 Speed Demon");if(c.rpg>=5)b.push("🧙 RPG Explorer");if(c.fps>=5)b.push("🔫 FPS Specialist");return b}
+function generateReview(s){const{n,c}=s;if(!n)return"গেম বাছাই করুন — আপনার personalized review এখানে তৈরি হবে।";const sh=a=>a.reduce((x,k)=>x+c[k],0)/n,P=[];
+P.push(n<=5?"আপনার Gaming Journey সবে শুরু হয়েছে, কিন্তু পছন্দের তালিকা দেখেই বোঝা যায় আপনার gaming taste দারুণ।":n<40?`আপনার Gaming Journey-তে ${n}টি গেম — সত্যিই impressive!`:`${n}টি গেমের এই বিশাল তালিকা একজন সত্যিকারের dedicated gamer-এর পরিচয় দেয়।`);
+const t=[];if(s.genres>=6)t.push("আপনি একজন অত্যন্ত versatile gamer। বিভিন্ন genre explore করার কারণে আপনার gaming taste বেশ বৈচিত্র্যময়।");
+if(sh(["fps","br","fgt","str"])>=.3)t.push("আপনার নির্বাচিত গেমগুলো দেখে বোঝা যায় আপনি competition, strategy এবং skill-based gameplay পছন্দ করেন।");
+if(sh(["rpg","ow","act"])>=.35)t.push("আপনার gaming choices থেকে বোঝা যায় আপনি immersive world, exploration এবং memorable stories উপভোগ করতে ভালোবাসেন।");
+if(c.hor>=3||sh(["hor"])>=.15)t.push("ভয়কে আপনি challenge হিসেবেই নেন। Horror এবং suspense আপনার gaming journey-র গুরুত্বপূর্ণ অংশ।");
+if(c.rac>=3||sh(["rac"])>=.15)t.push("আপনার profile-এ speed এবং competition-এর স্পষ্ট ছাপ রয়েছে। Racing games আপনার gaming personality-তে বড় ভূমিকা রাখে।");
+if(sh(["sbx"])>=.2)t.push("আপনি সম্ভবত freedom এবং creativity পছন্দ করেন। নিজের মতো করে world explore এবং build করার গেম আপনার journey-তে বিশেষ জায়গা দখল করে আছে।");
+if(s.span>=6)t.push("আপনার gaming journey একাধিক gaming era জুড়ে বিস্তৃত। আপনি শুধু নতুন গেম নয়, বিভিন্ন সময়ের iconic experiences-ও explore করেছেন।");
+if(!t.length)t.push("আপনার পছন্দগুলো একটি স্পষ্ট ও সুন্দর gaming identity তৈরি করছে।");
+return P.concat(t.slice(0,3)).join(" ")+" এই অসাধারণ journey চালিয়ে যান! 🎮"}
+function generateGamingNetwork(s,col){const G=s.G.slice().sort((a,b)=>CATS.findIndex(x=>x[0]===a.category)-CATS.findIndex(x=>x[0]===b.category)||a.year-b.year),n=G.length;if(!n)return`<svg viewBox="0 0 720 120"><text x="360" y="64" fill="#9aa3c7" text-anchor="middle" font-size="16">Select games to build your network</text></svg>`;
+const W=720,cols=n<=5?n:n<=20?4:n<=50?6:8,cw=W/cols,ch=n<=5?130:n<=20?96:n<=50?76:64,rows=Math.ceil(n/cols),H=50+rows*ch,fs=n>50?9:n>20?11:13,r=n>50?5:n>20?6:8;
+const P=G.map((g,i)=>{const rw=Math.floor(i/cols);let cc=i%cols;if(rw%2)cc=cols-1-cc;return{g,x:(cc+.5)*cw,y:34+rw*ch+(cc%2?12:0)}});
+let e="";const ln=(a,b,cl,o)=>e+=`<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${cl}" stroke-opacity="${o}" stroke-width="1.6"/>`;
+for(let i=0;i<n-1;i++){const a=P[i],b=P[i+1];ln(a,b,a.g.category===b.g.category?CN[a.g.category][3]:col,a.g.category===b.g.category?.8:.35)}
+for(let i=0;i<n;i++){const j=P.findIndex((p,k)=>k>i+1&&k<=i+cols+1&&Math.abs(p.x-P[i].x)<cw*.6&&(p.g.category===P[i].g.category||Math.abs(p.g.year-P[i].g.year)<=1));if(j>0)ln(P[i],P[j],col,.25)}
+const mc=Math.max(6,Math.floor(cw/(fs*.56)));
+const nd=P.map((p,i)=>{const cl=CN[p.g.category][3],nm=p.g.name.length>mc?p.g.name.slice(0,mc-1)+"…":p.g.name;return`<g><circle class="node" style="animation-delay:${(i%7)*.4}s" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r}" fill="${cl}" stroke="#fff" stroke-opacity=".7" stroke-width="1.2"/><text x="${p.x.toFixed(1)}" y="${(p.y+r+fs+1).toFixed(1)}" text-anchor="middle" font-size="${fs}" font-weight="700" fill="#eef1ff" font-family="sans-serif">${esc(nm)}</text>${n<=50?`<text x="${p.x.toFixed(1)}" y="${(p.y+r+fs*2+2).toFixed(1)}" text-anchor="middle" font-size="${fs-2}" fill="${cl}" font-family="sans-serif">${p.g.year}${n<=20?" · "+esc(CN[p.g.category][2].split(" /")[0]):""}</text>`:""}</g>`}).join("");
+return`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gl)">${e}${nd}</g></svg>`}
+function avatar(){const nm=state.userName.trim();return state.profileImage?`style="background-image:url(${state.profileImage})"></div>`:`>${esc(nm?[...nm.split(/\s+/).map(w=>[...w][0]).slice(0,2).join("")][0].toUpperCase():"🎮")}</div>`}
+function dist(s){const m=CATS.map(c=>[c,s.c[c[0]]]).filter(x=>x[1]).sort((a,b)=>b[1]-a[1]).slice(0,6),mx=m.length?m[0][1]:1;return m.map(([c,v])=>`<div><em>${c[1]} ${c[2].split(" /")[0]}</em><i style="width:${Math.max(6,v/mx*100*.55)}%"></i><span>${v}</span></div>`).join("")}
+function updateAll(){const s=calc(),era=updateGamingEra(s),pe=calculatePersonality(s),rank=calculateGamerRank(s.n);updateCounter();renderSelectedGames();
+$("stats").innerHTML=[["🎮 Games Played",s.n],["🎯 Genres Explored",s.genres],["📅 Years Covered",s.n?(s.mn===s.mx?s.mn:s.mn+"–"+s.mx):"—"],["🏆 Gamer Rank",rank],["🕹️ Oldest Game",s.old?s.old.name:"—"],["⚡ Newest Game",s.nw?s.nw.name:"—"]].map(x=>`<div class="st"><span>${x[0]}</span><b>${esc(x[1])}</b></div>`).join("");
+$("era").textContent=era.label;$("span").textContent=era.txt;$("pers").textContent=pe.name;$("persd").textContent=pe.d;
+$("pav").className="av";$("pav").style.backgroundImage=state.profileImage?`url(${state.profileImage})`:"";$("pav").textContent=state.profileImage?"":($("pav").dataset.i=avatarText());
+generatePoster(s,era,pe,rank);save()}
+function avatarText(){const nm=state.userName.trim();return nm?nm.split(/\s+/).map(w=>[...w][0]).slice(0,2).join("").toUpperCase():"🎮"}
+function generatePoster(s,era,pe,rank){s=s||calc();era=era||updateGamingEra(s);pe=pe||calculatePersonality(s);rank=rank||calculateGamerRank(s.n);const col=getComputedStyle(document.documentElement).getPropertyValue("--a").trim()||"#00e5ff";const b=generateBadges(s);
+$("poster").innerHTML=`<div class="pt">🎮 আমার GAMING JOURNEY</div><div class="ph"><div class="av" style="${state.profileImage?`background-image:url(${state.profileImage})`:""}">${state.profileImage?"":esc(avatarText())}</div><div class="pn">${esc(state.userName.trim()||"Gamer")}</div><div class="pr">🏆 ${esc(rank)}</div><div class="pp">${esc(pe.name)}</div><div class="pp">আমি ${s.n}টি গেম খেলেছি</div></div>
+<div class="pm">${s.n}<small>GAMES PLAYED</small></div>
+<div class="p3"><div><b>${s.genres}</b>Genres Explored</div><div><b>${esc(era.label.replace(/ Gamer$/,""))}</b>Gaming Era</div><div><b>${s.n?(s.mn===s.mx?s.mn:s.mn+"–"+s.mx):"—"}</b>Years Covered</div></div>
+<div class="pl">GAMING JOURNEY NETWORK</div><div class="net">${generateGamingNetwork(s,col)}</div><div class="bd" style="margin-top:6px">${CATS.filter(c=>s.c[c[0]]).map(c=>`<span style="border-color:${c[3]};background:none;font-size:.66rem">${c[1]} ${c[2].split(" /")[0]}</span>`).join("")}</div>
+${b.length?`<div class="pl">ACHIEVEMENTS</div><div class="bd">${b.map(x=>`<span>${x}</span>`).join("")}</div>`:""}
+${s.n?`<div class="pl">CATEGORY DISTRIBUTION</div><div class="dist">${dist(s)}</div><div class="pl">SELECTED GAMES</div><div class="pg">${s.G.map(g=>`<span>${esc(g.name)}</span>`).join("")}</div>`:""}
+<div class="pl">GAMING PERSONALITY REVIEW</div><div class="rv">${esc(generateReview(s))}</div><div class="pf">GAMING ACHIEVEMENT MAP</div>`}
+function changeTheme(t,quiet){state.selectedTheme=t;document.documentElement.dataset.theme=t;document.querySelectorAll(".th").forEach(e=>e.classList.toggle("on",e.dataset.t===t));if(!quiet)showToast("✓ Theme changed!");setTimeout(()=>{generatePoster();save()},30)}
+function handlePhotoUpload(f){if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){showToast("JPG, PNG বা WEBP ব্যবহার করুন");return}const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const c=document.createElement("canvas");c.width=c.height=400;const x=c.getContext("2d"),m=Math.min(im.width,im.height);x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,400,400);state.profileImage=c.toDataURL("image/jpeg",.9);URL.revokeObjectURL(u);updateAll()};im.src=u}
+function loadH2C(){return window.html2canvas?Promise.resolve():new Promise((ok,no)=>{const s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+async function dl(type){if(!state.selectedGames.length){showToast("Please select at least one game.");return}try{showToast("⏳ Generating...");await loadH2C();generatePoster();const el=$("poster");const cv=await html2canvas(el,{scale:Math.min(4,Math.max(2,1400/el.offsetWidth)),backgroundColor:getComputedStyle(document.documentElement).getPropertyValue("--bg").trim(),useCORS:true});const a=document.createElement("a");a.download="gaming-journey-map."+(type==="png"?"png":"jpg");a.href=type==="png"?cv.toDataURL("image/png"):cv.toDataURL("image/jpeg",.95);document.body.appendChild(a);a.click();a.remove();showToast("✓ Image downloaded!")}catch(e){showToast("Download failed. ইন্টারনেট সংযোগ দেখুন।")}}
+const downloadPNG=()=>dl("png"),downloadJPG=()=>dl("jpg");
+function shareText(){const s=calc();return`আমি আমার Gaming Journey-তে ${s.n}টি গেম খেলেছি 🎮\n\nMy Gamer Title: ${calculateGamerRank(s.n)}\nGaming Personality: ${calculatePersonality(s).name}\n\nCreated with Gaming Achievement Map`}
+async function copyT(t){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}showToast("✓ Copied!")}
+async function shareResult(){if(!state.selectedGames.length){showToast("Please select at least one game.");return}const t=shareText();if(navigator.share){try{await navigator.share({text:t})}catch(e){}}else copyT(t)}
+function copySummary(){if(!state.selectedGames.length){showToast("Please select at least one game.");return}const s=calc(),e=updateGamingEra(s);copyT(`🎮 GAMING JOURNEY — ${state.userName.trim()||"Gamer"}\nGames Played: ${s.n}\nGenres Explored: ${s.genres}\nMy Gamer Title: ${calculateGamerRank(s.n)}\nGaming Personality: ${calculatePersonality(s).name}\nGaming Era: ${e.label}\n${e.txt}\n\nGames: ${s.G.map(g=>g.name).join(", ")}\n\nCreated with Gaming Achievement Map`)}
+function resetEverything(){if(!confirm("আপনি কি সব তথ্য reset করতে চান?"))return;Object.assign(state,JSON.parse(JSON.stringify(DEF)));$("q").value="";$("yr").value="all";$("nm").value="";$("ph").value="";try{localStorage.removeItem("gjm")}catch(e){}changeTheme("cyber",true);renderCategories();renderGames();updateAll();showToast("↻ Reset done")}
+function initializeApp(){load();$("yr").innerHTML=`<option value="all">সব বছর</option>`+Array.from({length:12},(_,i)=>`<option>${2015+i}</option>`).join("");
+$("themes").innerHTML=THEMES.map(t=>`<button class="th" data-t="${t[0]}"><div class="pv" style="background:linear-gradient(135deg,#000,${t[2][0]},${t[2][1]},${t[2][2]})"></div><b>${t[1]}</b><div class="dots">${t[2].map(c=>`<i style="background:${c}"></i>`).join("")}</div></button>`).join("");
+$("nm").value=state.userName;renderCategories();renderGames();changeTheme(state.selectedTheme,true);updateAll();
+$("go").onclick=()=>$("pick").scrollIntoView({behavior:"smooth"});
+$("q").oninput=e=>{state.search=e.target.value;renderGames()};$("yr").onchange=e=>{state.selectedYear=e.target.value;renderGames()};
+$("cats").onclick=e=>{const b=e.target.closest("[data-c]");if(!b)return;state.selectedCategory=b.dataset.c;renderCategories();renderGames()};
+$("grid").onclick=e=>{const b=e.target.closest("[data-id]");if(!b)return;const id=b.dataset.id;if(state.selectedGames.includes(id)){deselectGame(id);b.classList.remove("on")}else{selectGame(id);b.classList.add("on")}updateAll()};
+$("sel").onclick=e=>{const b=e.target.closest("[data-rm]");if(!b)return;deselectGame(b.dataset.rm);const g=document.querySelector(`.g[data-id="${b.dataset.rm}"]`);if(g)g.classList.remove("on");updateAll()};
+$("clr").onclick=()=>{if(!state.selectedGames.length){showToast("Please select at least one game.");return}if(confirm("সব নির্বাচিত গেম বাতিল করতে চান?")){state.selectedGames=[];renderGames();updateAll()}};
+$("themes").onclick=e=>{const b=e.target.closest("[data-t]");if(b)changeTheme(b.dataset.t)};
+$("nm").oninput=e=>{state.userName=e.target.value;updateAll()};
+$("ph").onchange=e=>handlePhotoUpload(e.target.files[0]);
+$("png").onclick=downloadPNG;$("jpg").onclick=downloadJPG;$("shr").onclick=shareResult;$("cpy").onclick=copySummary;$("rst").onclick=resetEverything}
+initializeApp();
+</script>
+</body>
+</html>
